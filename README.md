@@ -25,3 +25,4 @@ The third box is what amount of dust you want to end with in billions. (exp: 200
 
 The last box is your current dust in billions.
 
+In this example I used the right side in order to find out I needed 1 of the 4.99 pack and one of the 9.99 pack to reach my goal of 20t dust. I then checked the work on the left side by adding the appropriate glasses. It worked! https://gyazo.com/665b4403aec3e480d2a6f4ae8f7393ca

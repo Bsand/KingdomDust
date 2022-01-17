@@ -1,4 +1,6 @@
 # KingdomDust
+NOTE: I ADDED THE PROGRAM AS AN EXE IF YOU DONT WANT TO INSTALL PYTHON, WINDOWS WILL WARN YOU ABOUT DOWNLOADING AND RUNNING THE EXE THOUGH, USE UNKNOWN EXE FILES AT YOUR OWN RISK. :)
+
 In order to get this file to run you need to install Python on your computer https://www.python.org/downloads/.
 
 If you are new to github and need help downloading the file, check out this website https://www.wikihow.com/Download-a-File-from-GitHub. And make sure to save the file as a .py file.

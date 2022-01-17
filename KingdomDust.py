@@ -1,11 +1,16 @@
+# Created by chb
+# Last update 1/17/2022
 from tkinter import *
 
+# Create the window
 root = Tk(className="Dust calculator")
 root.geometry("550x300")
 
+# Variables used later
 message = StringVar()
 message2 = StringVar()
 
+# All objects for left side
 e1 = Entry(root)
 e2 = Entry(root)
 e3 = Entry(root)
@@ -29,6 +34,7 @@ t4 = Label(root, text="Current Dust in Billions")
 l1 = Label(root, text="")
 t5 = Label(root, text="Total in Trillions")
 
+# All objects for right side
 e21 = Entry(root)
 e22 = Entry(root)
 e23 = Entry(root)
@@ -40,7 +46,7 @@ t24 = Label(root, text="Current Dust in Billions")
 l21 = Label(root, text="")
 t25 = Label(root, text="Total Hours of Dust Needed")
 
-
+# Function for pressing left submit button
 def press():
     if e1.get().replace(".", "", 1).isnumeric() and e2.get().replace(".", "", 1).isnumeric() \
             and e3.get().replace(".", "", 1).isnumeric() \
@@ -54,6 +60,7 @@ def press():
     else:
         l1.config(text="Invalid Entry")
 
+# Function for pressing right submit button
 def press2():
     if e21.get().replace(".", "", 1).isnumeric() and e22.get().replace(".", "", 1).isnumeric() \
             and e23.get().replace(".", "", 1).isnumeric() and e24.get().replace(".", "", 1).isnumeric():
@@ -63,6 +70,7 @@ def press2():
     else:
         l21.config(text="Invalid Entry")
 
+# Function to calculate glass totals for left side
 def glassCalc():
     total = 0.0
     r = []
@@ -94,47 +102,39 @@ def glassCalc():
     x7 = (float(e9.get()) * 5 / 60)
     r.append(x7)
 
-    print(max(r))
     total = (g1+g2+g3+g4+g5+g6+g7) - max(r)
     return total
 
 
+# Adding buttons to UI
 b1 = Button(root, text="Submit", command=press).grid(row=10, column=1)
 b2 = Button(root, text="Submit", command=press2).grid(row=4, column=3)
 
+# Adding left side to UI
 t1.grid(row=0, column=0)
 e1.grid(row=0, column=1)
-
 t2.grid(row=1, column=0)
 e2.grid(row=1, column=1)
-
 hg.grid(row=2, column=0)
 e3.grid(row=2, column=1)
-
 hg2.grid(row=3, column=0)
 e4.grid(row=3, column=1)
-
 hg3.grid(row=4, column=0)
 e5.grid(row=4, column=1)
-
 hg4.grid(row=5, column=0)
 e6.grid(row=5, column=1)
-
 hg5.grid(row=6, column=0)
 e7.grid(row=6, column=1)
-
 hg6.grid(row=7, column=0)
 e8.grid(row=7, column=1)
-
 hg7.grid(row=8, column=0)
 e9.grid(row=8, column=1)
-
 t4.grid(row=9, column=0)
 e10.grid(row=9, column=1)
-
 t5.grid(row=11, column=0)
 l1.grid(row=11, column=1)
 
+# Adding right side to UI
 t21.grid(row=0, column=2)
 e21.grid(row=0, column=3)
 t22.grid(row=1, column=2)
@@ -146,4 +146,5 @@ e24.grid(row=3, column=3)
 t25.grid(row=5, column=2)
 l21.grid(row=5, column=3)
 
+# Keep window open
 root.mainloop()

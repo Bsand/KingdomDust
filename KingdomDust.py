@@ -9,6 +9,9 @@ root.geometry("550x300")
 # Variables used later
 message = StringVar()
 message2 = StringVar()
+m1 = StringVar()
+m2 = StringVar()
+m3 = StringVar()
 
 # All objects for left side
 e1 = Entry(root)
@@ -45,6 +48,13 @@ t23 = Label(root, text="Dust Goal in Billions")
 t24 = Label(root, text="Current Dust in Billions")
 l21 = Label(root, text="")
 t25 = Label(root, text="Total Hours of Dust Needed")
+col1 = Label(root, text="Number of $2.99 packs")
+col2 = Label(root, text="Number of $4.99 packs")
+col3 = Label(root, text="Number of $9.99 packs")
+col4 = Label(root, text="")
+col5 = Label(root, text="")
+col6 = Label(root, text="")
+
 
 # Function for pressing left submit button
 def press():
@@ -67,8 +77,20 @@ def press2():
         message2.set(str((-60*float(e21.get())*float(e22.get()) - float(e24.get()) +
                           float(e23.get()))/(60*float(e21.get()))))
         l21.config(text=message2.get())
+        current = float(e24.get())
+        rate = float(e21.get())
+        total = float(e23.get())
+        maxTime = float(e22.get()) * 60
+        final, countFreePack, countPack1, countPack2, countPack3, totalDust = calc(current, rate, total, maxTime)
+        m1.set(countPack1)
+        m2.set(countPack2)
+        m3.set(countPack3)
+        col4.config(text=m1.get())
+        col5.config(text=m2.get())
+        col6.config(text=m3.get())
     else:
         l21.config(text="Invalid Entry")
+
 
 # Function to calculate glass totals for left side
 def glassCalc():
@@ -104,6 +126,52 @@ def glassCalc():
 
     total = (g1+g2+g3+g4+g5+g6+g7) - max(r)
     return total
+
+# Calculate how much to buy from shop
+def calc(current, rate, total, maxTime, counts=[0, 0, 0, 0], final=-1.0, fC0=0, fC1=0, fC2=0, fC3=0, tDust=0):
+    x2Time = 30 * counts[0] + 120 * counts[1]
+    x10Time = 5 * counts[1] + 30 * counts[2]
+    x20Time = 5 * counts[2] + 30 * counts[3]
+    x50Time = 5 * counts[3]
+
+    highTime = max(x2Time, x10Time, x20Time, x50Time)
+
+    tCurrent = current + (rate) * (maxTime + 2 * x2Time + 10 * x10Time + 20 * x20Time + 50 * x50Time - highTime)
+    cost = counts[1] * 3.00 + counts[2] * 5.00 + counts[3] * 10.00
+
+    if tCurrent >= total and (cost < final or final == -1.0):
+        final = cost
+        finalCounts = counts
+        return cost, counts[0], counts[1], counts[2], counts[3], tCurrent
+
+    elif cost > final and final >= 0.0:
+        return final, fC0, fC1, fC2, fC3, tDust
+
+    elif cost == final and final >= 0.0:
+        return cost, counts[0], counts[1], counts[2], counts[3], tCurrent
+
+    else:
+        if counts[0] < 0:
+            counts[0] += 1
+            final, fC0, fC1, fC2, fC3, tDust = calc(current, rate, total, maxTime, counts, final, fC0, fC1, fC2, fC3,
+                                                    tDust)
+            counts[0] -= 1
+        if counts[1] < 10:
+            counts[1] += 1
+            final, fC0, fC1, fC2, fC3, tDust = calc(current, rate, total, maxTime, counts, final, fC0, fC1, fC2, fC3,
+                                                    tDust)
+            counts[1] -= 1
+        if counts[2] < 10:
+            counts[2] += 1
+            final, fC0, fC1, fC2, fC3, tDust = calc(current, rate, total, maxTime, counts, final, fC0, fC1, fC2, fC3,
+                                                    tDust)
+            counts[2] -= 1
+        if counts[3] < 10:
+            counts[3] += 1
+            final, fC0, fC1, fC2, fC3, tDust = calc(current, rate, total, maxTime, counts, final, fC0, fC1, fC2, fC3,
+                                                    tDust)
+            counts[3] -= 1
+        return final, fC0, fC1, fC2, fC3, tDust
 
 
 # Adding buttons to UI
@@ -145,6 +213,13 @@ t24.grid(row=3, column=2)
 e24.grid(row=3, column=3)
 t25.grid(row=5, column=2)
 l21.grid(row=5, column=3)
+col1.grid(row=6, column=2)
+col4.grid(row=6, column=3)
+col2.grid(row=7, column=2)
+col5.grid(row=7, column=3)
+col3.grid(row=8, column=2)
+col6.grid(row=8, column=3)
+
 
 # Keep window open
 root.mainloop()
